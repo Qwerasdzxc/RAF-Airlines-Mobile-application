@@ -20,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
 
       try {
-        userService.login(event.email, event.password);
+        await userService.login(event.email, event.password);
 
         yield LoginSuccessful();
       } catch (_) {

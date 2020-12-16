@@ -6,11 +6,11 @@ import 'package:raf_airlines_client/services/user/dao/user_dao.dart';
 
 class UserRestDAO implements UserDAO {
   @override
-  FutureOr<void> login(String email, String password) {
+  FutureOr<void> login(String email, String password) async {
     try {
-      RestClient().login(email, password);
+      await RestClient().login(email, password);
     } on NetworkException catch (e) {
-      print(e?.cause);
+      print(e.cause);
       throw e;
     }
   }

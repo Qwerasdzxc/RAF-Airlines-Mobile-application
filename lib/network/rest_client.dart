@@ -5,6 +5,8 @@ class RestClient {
 
   Dio _dio;
 
+  String _authorizationToken;
+
   static final RestClient _singleton = RestClient._internal();
 
   factory RestClient() {
@@ -27,7 +29,7 @@ class RestClient {
 
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options) async {
-        // options.headers["Auth"] = "";
+        options.headers["Authorization"] = _authorizationToken;
         options.headers["Content-Type"] = "application/json";
 
         return options;
@@ -38,7 +40,7 @@ class RestClient {
   Future<void> login(String email, String password) async {
     try {
       Response response = await _dio.post("login", data: {"username": email, "password": password});
-      print(response.headers["Authorization"]);
+      _authorizationToken = response.headers.value("authorization");
     } on DioError catch (e) {
       throw NetworkException(cause: e.message);
     }

@@ -183,7 +183,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                     ),
                   ),
                   BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
-                    if (state is LoginSuccessful) navigateToHomeScreen();
+                    if (state is LoginSuccessful)
+                      navigateToHomeScreen();
                   }, builder: (context, state) {
                     if (state is LoginInitial || state is LoginError)
                       return InkWell(

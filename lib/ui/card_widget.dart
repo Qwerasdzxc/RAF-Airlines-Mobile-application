@@ -83,7 +83,7 @@ class CardWidget extends StatelessWidget {
                 Theme.of(context).primaryColorDark,
                 Theme.of(context).primaryColorDark.withOpacity(0.8)
               ], stops: [
-                0.7,
+                0.5,
                 1
               ]),
               borderRadius: BorderRadius.circular(20.0)),
