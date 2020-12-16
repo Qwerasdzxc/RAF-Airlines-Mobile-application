@@ -2,17 +2,30 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:raf_airlines_client/services/user/user_service.dart';
 
 part 'login_event.dart';
+
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial());
+  final UserService userService;
+
+  LoginBloc({@required this.userService}) : super(LoginInitial());
 
   @override
-  Stream<LoginState> mapEventToState(
-    LoginEvent event,
-  ) async* {
-    // TODO: implement mapEventToState
+  Stream<LoginState> mapEventToState(LoginEvent event) async* {
+    if (event is LoginCredentialsProvided) {
+      yield LoginLoading();
+
+      try {
+        userService.login(event.email, event.password);
+
+        yield LoginSuccessful();
+      } catch (_) {
+        yield LoginError();
+      }
+    }
   }
 }

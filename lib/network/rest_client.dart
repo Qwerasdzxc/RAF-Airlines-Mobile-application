@@ -1,0 +1,46 @@
+import 'package:dio/dio.dart';
+import 'package:raf_airlines_client/network/network_exception.dart';
+
+class RestClient {
+
+  Dio _dio;
+
+  static final RestClient _singleton = RestClient._internal();
+
+  factory RestClient() {
+    return _singleton;
+  }
+
+  RestClient._internal() {
+    init();
+  }
+
+  void init() async {
+    _dio = Dio();
+
+    _dio.options.baseUrl = "http://localhost:8080/";
+
+    _dio.options.connectTimeout = 90000;
+    _dio.options.receiveTimeout = 90000;
+
+    _dio.options.validateStatus = (status) => status < 300 && status >= 200;
+
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options) async {
+        // options.headers["Auth"] = "";
+        options.headers["Content-Type"] = "application/json";
+
+        return options;
+      }
+    ));
+  }
+  
+  Future<void> login(String email, String password) async {
+    try {
+      Response response = await _dio.post("login", data: {"username": email, "password": password});
+      print(response.headers["Authorization"]);
+    } on DioError catch (e) {
+      throw NetworkException(cause: e.message);
+    }
+  }
+}
