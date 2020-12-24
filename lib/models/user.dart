@@ -10,6 +10,7 @@ class User extends Equatable {
   final String name;
   final String surname;
   final String email;
+  final String passport;
 
   final Tier tier;
 
@@ -19,6 +20,7 @@ class User extends Equatable {
       @required this.name,
       @required this.surname,
       @required this.email,
+      @required this.passport,
       @required this.tier});
 
   factory User.fromJson(Map json) => User(
@@ -27,6 +29,7 @@ class User extends Equatable {
       name: json["name"],
       surname: json["surname"],
       email: json["email"],
+      passport: json["passport"],
       tier: Tier.fromJson(json["tier"]));
 
   @override

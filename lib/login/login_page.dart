@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raf_airlines_client/home/home_page.dart';
 import 'package:raf_airlines_client/login/bloc/login_bloc.dart';
+import 'package:raf_airlines_client/login/register/bloc/registration_bloc.dart';
+import 'package:raf_airlines_client/login/register/registration_page.dart';
 import 'package:raf_airlines_client/ui/card_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,7 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
-  final TextEditingController _emailController = TextEditingController(text: "client@raf-airlines.com");
+  final TextEditingController _emailController =
+      TextEditingController(text: "client@raf-airlines.com");
   final TextEditingController _passwordController = TextEditingController(text: "pAsSwOrD");
 
   AnimationController _rotationController;
@@ -183,8 +186,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                     ),
                   ),
                   BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
-                    if (state is LoginSuccessful)
-                      navigateToHomeScreen();
+                    if (state is LoginSuccessful) navigateToHomeScreen();
                   }, builder: (context, state) {
                     if (state is LoginInitial || state is LoginError)
                       return InkWell(
@@ -209,8 +211,26 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                         ),
                       );
                     else
-                      return Center(child: CircularProgressIndicator(),);
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                   }),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Center(
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                                  create: (_) => RegistrationBloc(),
+                                  child: RegistrationPage(),
+                                ))),
+                        child: Text(
+                          "Don't have an account? Register here",
+                          style: TextStyle(decoration: TextDecoration.underline),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'RAF Airlines',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue[700],
         primaryColorDark: Colors.blue[900]
       ),
       home: BlocProvider<LoginBloc>(
