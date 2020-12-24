@@ -6,6 +6,8 @@ import 'package:raf_airlines_client/home/home_page.dart';
 import 'package:raf_airlines_client/login/bloc/login_bloc.dart';
 import 'package:raf_airlines_client/login/register/bloc/registration_bloc.dart';
 import 'package:raf_airlines_client/login/register/registration_page.dart';
+import 'package:raf_airlines_client/services/service_provider.dart';
+import 'package:raf_airlines_client/services/user/user_service.dart';
 import 'package:raf_airlines_client/ui/card_widget.dart';
 
 class LoginPage extends StatefulWidget {
@@ -221,7 +223,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       child: InkWell(
                         onTap: () => Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => BlocProvider(
-                                  create: (_) => RegistrationBloc(),
+                                  create: (_) => RegistrationBloc(service: getService<UserService>()),
                                   child: RegistrationPage(),
                                 ))),
                         child: Text(

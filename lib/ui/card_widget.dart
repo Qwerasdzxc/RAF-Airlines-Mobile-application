@@ -1,5 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+// One time randomly generated
+// passenger number for UI purposes
+final int _passengerNumber = Random().nextInt(999999);
 
 class CardWidget extends StatelessWidget {
   const CardWidget({Key key}) : super(key: key);
@@ -36,7 +42,7 @@ class CardWidget extends StatelessWidget {
                           child: Column(
                             children: [
                               Text(
-                                "Passenger #6212",
+                                "Passenger #" + _passengerNumber.toString(),
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.grey[300],

@@ -10,8 +10,13 @@ class UserRestDAO implements UserDAO {
     try {
       await RestClient().login(email, password);
     } on NetworkException catch (e) {
-      print(e.cause);
       throw e;
     }
+  }
+
+  @override
+  FutureOr<void> register(
+      String name, String surname, String email, String password, String passport) {
+    throw UnimplementedError();
   }
 }
