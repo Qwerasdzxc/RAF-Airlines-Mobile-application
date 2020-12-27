@@ -2,11 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raf_airlines_client/home/bloc/home_bloc.dart';
 import 'package:raf_airlines_client/home/home_page.dart';
 import 'package:raf_airlines_client/login/bloc/login_bloc.dart';
 import 'package:raf_airlines_client/login/register/bloc/registration_bloc.dart';
 import 'package:raf_airlines_client/login/register/registration_page.dart';
+import 'package:raf_airlines_client/services/flight/flight_service.dart';
 import 'package:raf_airlines_client/services/service_provider.dart';
+import 'package:raf_airlines_client/services/ticket/ticket_service.dart';
 import 'package:raf_airlines_client/services/user/user_service.dart';
 import 'package:raf_airlines_client/ui/card_widget.dart';
 
@@ -16,8 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
-  final TextEditingController _emailController =
-      TextEditingController(text: "client@raf-airlines.com");
+  final TextEditingController _emailController = TextEditingController(text: "client@raf-airlines.com");
   final TextEditingController _passwordController = TextEditingController(text: "pAsSwOrD");
 
   AnimationController _rotationController;
@@ -56,12 +58,16 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   void login(BuildContext context) async {
     if (_emailController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) return;
 
-    BlocProvider.of<LoginBloc>(context).add(LoginCredentialsProvided(
-        email: _emailController.text.trim(), password: _passwordController.text.trim()));
+    BlocProvider.of<LoginBloc>(context)
+        .add(LoginCredentialsProvided(email: _emailController.text.trim(), password: _passwordController.text.trim()));
   }
 
-  void navigateToHomeScreen() =>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => HomePage()));
+  void navigateToHomeScreen() => Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (_) => BlocProvider<HomeBloc>(
+          create: (_) =>
+              HomeBloc(ticketService: getService<TicketService>(), flightService: getService<FlightService>())
+                ..add(HomeInit()),
+          child: HomePage())));
 
   @override
   Widget build(BuildContext context) {
@@ -80,19 +86,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: Text("RAF Airlines",
                           style: TextStyle(
-                              fontSize: 22,
-                              color: Theme.of(context).primaryColorDark,
-                              fontWeight: FontWeight.w600)),
+                              fontSize: 22, color: Theme.of(context).primaryColorDark, fontWeight: FontWeight.w600)),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: RichText(
                         text: TextSpan(
                             style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey,
-                                fontFamily: 'Axiforma'),
+                                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey, fontFamily: 'Axiforma'),
                             children: [
                               TextSpan(
                                 text: "Your airlines of ",
@@ -100,8 +101,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                               TextSpan(
                                   text: "security and trust! ",
                                   style: TextStyle(
-                                      color: Theme.of(context).primaryColorDark,
-                                      decoration: TextDecoration.underline)),
+                                      color: Theme.of(context).primaryColorDark, decoration: TextDecoration.underline)),
                             ]),
                       ),
                     ),

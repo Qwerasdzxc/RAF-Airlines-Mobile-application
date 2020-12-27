@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raf_airlines_client/home/bloc/home_bloc.dart';
 import 'package:raf_airlines_client/home/home_page.dart';
 import 'package:raf_airlines_client/login/register/bloc/registration_bloc.dart';
+import 'package:raf_airlines_client/services/flight/flight_service.dart';
+import 'package:raf_airlines_client/services/service_provider.dart';
+import 'package:raf_airlines_client/services/ticket/ticket_service.dart';
 import 'package:raf_airlines_client/ui/fade_in_widget.dart';
 import 'package:raf_airlines_client/ui/fullscreen_popup.dart';
 import 'package:raf_airlines_client/ui/white_list_item.dart';
@@ -44,10 +48,7 @@ class RegistrationPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     text: TextSpan(
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                            fontFamily: 'Axiforma'),
+                            fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey, fontFamily: 'Axiforma'),
                         children: [
                           TextSpan(
                             text: "Welcome to ",
@@ -55,10 +56,7 @@ class RegistrationPage extends StatelessWidget {
                           TextSpan(
                               text: "RAF Airlines! ",
                               style: TextStyle(
-                                  color: Theme
-                                      .of(context)
-                                      .primaryColorDark,
-                                  decoration: TextDecoration.underline)),
+                                  color: Theme.of(context).primaryColorDark, decoration: TextDecoration.underline)),
                           TextSpan(
                             text: "Here you can create your new account and start flying with us",
                           ),
@@ -71,10 +69,7 @@ class RegistrationPage extends StatelessWidget {
                     subtitle: "Your name",
                     child: TextFormField(
                       controller: _nameController,
-                      validator: (text) =>
-                      text
-                          .trim()
-                          .isNotEmpty ? null : "Name is required",
+                      validator: (text) => text.trim().isNotEmpty ? null : "Name is required",
                     )),
                 WhiteListItem(
                     icon: Icons.person,
@@ -82,10 +77,7 @@ class RegistrationPage extends StatelessWidget {
                     subtitle: "Your surname",
                     child: TextFormField(
                       controller: _surnameController,
-                      validator: (text) =>
-                      text
-                          .trim()
-                          .isNotEmpty ? null : "Surname is required",
+                      validator: (text) => text.trim().isNotEmpty ? null : "Surname is required",
                     )),
                 WhiteListItem(
                     icon: Icons.email,
@@ -93,10 +85,7 @@ class RegistrationPage extends StatelessWidget {
                     subtitle: "Your e-mail address (must be valid)",
                     child: TextFormField(
                       controller: _emailController,
-                      validator: (text) =>
-                      text
-                          .trim()
-                          .isNotEmpty ? null : "E-mail is required",
+                      validator: (text) => text.trim().isNotEmpty ? null : "E-mail is required",
                     )),
                 WhiteListItem(
                     icon: Icons.assignment_ind_sharp,
@@ -104,10 +93,7 @@ class RegistrationPage extends StatelessWidget {
                     subtitle: "Your passport number which will be used for travel",
                     child: TextFormField(
                       controller: _passportController,
-                      validator: (text) =>
-                      text
-                          .trim()
-                          .isNotEmpty ? null : "Passport is required",
+                      validator: (text) => text.trim().isNotEmpty ? null : "Passport is required",
                     )),
                 WhiteListItem(
                     icon: Icons.lock,
@@ -116,10 +102,7 @@ class RegistrationPage extends StatelessWidget {
                     child: TextFormField(
                       obscureText: true,
                       controller: _password1Controller,
-                      validator: (text) =>
-                      text
-                          .trim()
-                          .isNotEmpty ? null : "Password is required",
+                      validator: (text) => text.trim().isNotEmpty ? null : "Password is required",
                     )),
                 WhiteListItem(
                     icon: Icons.lock,
@@ -128,8 +111,7 @@ class RegistrationPage extends StatelessWidget {
                     child: TextFormField(
                       controller: _password2Controller,
                       obscureText: true,
-                      validator: (text) =>
-                      text == _password1Controller.text ? null : "Passwords don't match",
+                      validator: (text) => text == _password1Controller.text ? null : "Passwords don't match",
                     )),
                 if (state is RegistrationInitial || state is RegistrationError)
                   Padding(
@@ -137,20 +119,17 @@ class RegistrationPage extends StatelessWidget {
                     child: FloatingActionButton.extended(
                       label: Text(
                         "Register",
-                        style:
-                        TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () =>
-                      {
+                      onPressed: () => {
                         if (_formKey.currentState.validate())
-                          BlocProvider.of<RegistrationBloc>(context).add(
-                              RegistrationCredentialsProvided(
-                                  name: _nameController.text,
-                                  surname: _surnameController.text,
-                                  email: _emailController.text,
-                                  passport: _passportController.text,
-                                  password1: _password1Controller.text,
-                                  password2: _password2Controller.text))
+                          BlocProvider.of<RegistrationBloc>(context).add(RegistrationCredentialsProvided(
+                              name: _nameController.text,
+                              surname: _surnameController.text,
+                              email: _emailController.text,
+                              passport: _passportController.text,
+                              password1: _password1Controller.text,
+                              password2: _password2Controller.text))
                       },
                     ),
                   )
@@ -175,9 +154,7 @@ class RegistrationPage extends StatelessWidget {
                     Icon(
                       Icons.check_circle,
                       size: 64,
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                     SizedBox(
                       height: 24,
@@ -196,12 +173,14 @@ class RegistrationPage extends StatelessWidget {
                           "Continue",
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                        onPressed: () =>
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(builder: (_) => HomePage())))
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (_) => BlocProvider<HomeBloc>(
+                                create: (_) => HomeBloc(
+                                    ticketService: getService<TicketService>(),
+                                    flightService: getService<FlightService>())
+                                  ..add(HomeInit()),
+                                child: HomePage()))))
                   ],
                 ),
               ),

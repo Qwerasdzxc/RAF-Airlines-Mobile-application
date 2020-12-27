@@ -21,7 +21,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     if (event is HomeInit) {
+      yield HomeLoading();
 
+      try {
+        final tickets = await ticketService.getMyTickets();
+        final flights = await flightService.getAvailableFlights();
+
+        yield HomeLoaded(flights: flights, tickets: tickets);
+      } catch (_) {
+        yield HomeError();
+      }
     }
   }
 }

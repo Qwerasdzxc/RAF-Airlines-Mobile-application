@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:raf_airlines_client/models/ticket.dart';
 
 class TicketCard extends StatelessWidget {
+  final Ticket ticket;
+
+  const TicketCard({Key key, @required this.ticket}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +30,7 @@ class TicketCard extends StatelessWidget {
                     size: 28,
                   ),
                   Text(
-                    "BEG",
+                    ticket.flight.startDestination,
                     style: TextStyle(fontSize: 18, color: Colors.blue[800], fontWeight: FontWeight.bold),
                   )
                 ],
@@ -43,7 +48,7 @@ class TicketCard extends StatelessWidget {
                     size: 28,
                   ),
                   Text(
-                    "LSB",
+                    ticket.flight.endDestination,
                     style: TextStyle(fontSize: 18, color: Colors.orange[800], fontWeight: FontWeight.bold),
                   )
                 ],
@@ -67,7 +72,7 @@ class TicketCard extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Boeing 747",
+                    ticket.flight.airplane.name,
                     style: TextStyle(color: Colors.teal[800], fontWeight: FontWeight.bold),
                   )
                 ],
@@ -91,8 +96,9 @@ class TicketCard extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Active",
-                    style: TextStyle(color: Colors.green[800], fontWeight: FontWeight.bold),
+                    ticket.canceled ? "Canceled" : "Active",
+                    style: TextStyle(
+                        color: ticket.canceled ? Colors.red[800] : Colors.green[800], fontWeight: FontWeight.bold),
                   )
                 ],
               )

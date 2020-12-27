@@ -1,7 +1,13 @@
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
+import 'package:raf_airlines_client/models/flight.dart';
 
 class FlightCard extends StatelessWidget {
+
+  final Flight flight;
+
+  const FlightCard({Key key, @required this.flight}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,7 +51,7 @@ class FlightCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      "NYC",
+                      flight.startDestination,
                       style: TextStyle(color: Colors.blue, fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     Expanded(
@@ -62,7 +68,7 @@ class FlightCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "BEG",
+                      flight.endDestination,
                       style: TextStyle(color: Colors.orange, fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -83,7 +89,7 @@ class FlightCard extends StatelessWidget {
                     width: 6,
                   ),
                   Text(
-                    "758 km",
+                    "${flight.distance} km",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -103,7 +109,7 @@ class FlightCard extends StatelessWidget {
                     width: 6,
                   ),
                   Text(
-                    "350 EUR",
+                    "${flight.price} EUR",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
