@@ -89,7 +89,7 @@ class FlightCard extends StatelessWidget {
                     width: 6,
                   ),
                   Text(
-                    "${flight.distance} km",
+                    "${flight.distance} KM",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],

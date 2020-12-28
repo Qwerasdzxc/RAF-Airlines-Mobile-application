@@ -69,11 +69,10 @@ class TicketCard extends StatelessWidget {
                   ),
                   Text(
                     "Plane:  ",
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
                     ticket.flight.airplane.name,
-                    style: TextStyle(color: Colors.teal[800], fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -93,7 +92,6 @@ class TicketCard extends StatelessWidget {
                   ),
                   Text(
                     "Status:  ",
-                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
                     ticket.canceled ? "Canceled" : "Active",

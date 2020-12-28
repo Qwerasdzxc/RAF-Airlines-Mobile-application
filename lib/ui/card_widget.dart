@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'clipper/ticket_clipper.dart';
+
 // One time randomly generated
 // passenger number for UI purposes
 final int _passengerNumber = Random().nextInt(999999);
@@ -95,23 +97,4 @@ class CardWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.0)),
         ));
   }
-}
-
-class TicketClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-
-    path.lineTo(0.0, size.height);
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, 0.0);
-
-    path.addOval(Rect.fromCircle(center: Offset(0.0, size.height / 2), radius: 20.0));
-    path.addOval(Rect.fromCircle(center: Offset(size.width, size.height / 2), radius: 20.0));
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

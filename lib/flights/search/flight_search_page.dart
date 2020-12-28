@@ -123,8 +123,6 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
                                             ),
                                             hintText: 'Start destination',
                                           ),
-                                          validator: (text) =>
-                                              text.trim().length != 3 ? "Airport must contain exactly 3 letters" : null,
                                           maxLength: 3,
                                         ),
                                       )
@@ -159,8 +157,6 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
                                             ),
                                             hintText: 'End destination',
                                           ),
-                                          validator: (text) =>
-                                              text.trim().length != 3 ? "Airport must contain exactly 3 letters" : null,
                                           maxLength: 3,
                                         ),
                                       )
