@@ -13,4 +13,6 @@ abstract class UserDAO {
   Future<User> getMyProfile();
 
   FutureOr<void> updatePassword(String currentPassword, String newPassword);
+
+  Future<List<CreditCard>> getMyCreditCards();
 }

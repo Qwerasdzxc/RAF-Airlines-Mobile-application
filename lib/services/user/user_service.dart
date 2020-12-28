@@ -21,4 +21,6 @@ class UserService {
 
   FutureOr<void> updatePassword(String currentPassword, String newPassword) async =>
       dao.updatePassword(currentPassword, newPassword);
+
+  Future<List<CreditCard>> getMyCreditCards() async => dao.getMyCreditCards();
 }

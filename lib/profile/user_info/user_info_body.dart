@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:raf_airlines_client/profile/bloc/user_info_bloc.dart';
 import 'package:raf_airlines_client/profile/change_password/bloc/change_password_bloc.dart';
 import 'package:raf_airlines_client/profile/change_password/change_password_page.dart';
 import 'package:raf_airlines_client/services/service_provider.dart';
@@ -8,6 +7,8 @@ import 'package:raf_airlines_client/services/user/user_service.dart';
 import 'package:raf_airlines_client/ui/error_button_widget.dart';
 import 'package:raf_airlines_client/ui/loading_icon.dart';
 import 'package:raf_airlines_client/ui/white_list_item.dart';
+
+import 'bloc/user_info_bloc.dart';
 
 class UserInfoBody extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

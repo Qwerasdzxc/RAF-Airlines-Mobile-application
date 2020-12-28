@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
-import 'package:raf_airlines_client/profile/bloc/user_info_bloc.dart';
-import 'package:raf_airlines_client/profile/bodies/user_info_body.dart';
+import 'package:raf_airlines_client/profile/user_info/bloc/user_info_bloc.dart';
+import 'package:raf_airlines_client/profile/user_info/user_info_body.dart';
 import 'package:raf_airlines_client/services/service_provider.dart';
 import 'package:raf_airlines_client/services/user/user_service.dart';
 import 'package:raf_airlines_client/ui/back_bar.dart';
