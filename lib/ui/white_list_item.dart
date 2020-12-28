@@ -15,7 +15,10 @@ class WhiteListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Card(
-        elevation: 2,
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(

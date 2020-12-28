@@ -54,6 +54,7 @@ class _FullscreenPopupState extends State<FullscreenPopup> with SingleTickerProv
                   height: 75,
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: FloatingActionButton.extended(
+                    backgroundColor: Theme.of(context).primaryColorDark,
                     label: Text(
                       "Close",
                       textAlign: TextAlign.center,

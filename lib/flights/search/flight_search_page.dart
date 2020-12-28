@@ -110,6 +110,7 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
                                       Expanded(
                                         child: TextFormField(
                                           controller: _startDestinationController,
+                                          textCapitalization: TextCapitalization.characters,
                                           decoration: InputDecoration(
                                             focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -144,6 +145,7 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
                                       Expanded(
                                         child: TextFormField(
                                           controller: _endDestinationController,
+                                          textCapitalization: TextCapitalization.characters,
                                           decoration: InputDecoration(
                                             focusedBorder: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(Radius.circular(12)),

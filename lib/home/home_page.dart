@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raf_airlines_client/flights/search/bloc/flight_search_bloc.dart';
 import 'package:raf_airlines_client/flights/search/flight_search_page.dart';
 import 'package:raf_airlines_client/home/bloc/home_bloc.dart';
-import 'package:raf_airlines_client/home/flight_card.dart';
-import 'package:raf_airlines_client/home/ticket_card.dart';
+import 'package:raf_airlines_client/home/ui/flight_card.dart';
+import 'package:raf_airlines_client/home/ui/ticket_card.dart';
+import 'package:raf_airlines_client/profile/profile_page.dart';
 import 'package:raf_airlines_client/services/airplane/airplane_service.dart';
 import 'package:raf_airlines_client/services/flight/flight_service.dart';
 import 'package:raf_airlines_client/services/service_provider.dart';
@@ -24,7 +25,7 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 12),
+                    padding: const EdgeInsets.only(top: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
@@ -49,9 +50,13 @@ class HomePage extends StatelessWidget {
                             )
                           ],
                         ),
-                        CircleAvatar(
-                          backgroundColor: Colors.grey[300],
-                          child: Icon(Icons.person),
+                        InkWell(
+                          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => ProfilePage())),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey[300],
+                            child: Icon(Icons.person, color: Theme.of(context).primaryColor),
+                          ),
                         )
                       ],
                     ),
@@ -67,9 +72,6 @@ class HomePage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SizedBox(
-                            height: 8,
-                          ),
                           Text(
                             "Hello,",
                             style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
