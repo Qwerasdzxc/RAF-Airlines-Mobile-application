@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:raf_airlines_client/models/credit_card.dart';
 import 'package:raf_airlines_client/models/user.dart';
 import 'package:raf_airlines_client/network/network_exception.dart';
 import 'package:raf_airlines_client/network/rest_client.dart';
@@ -33,6 +34,21 @@ class UserRestDAO implements UserDAO {
 
   @override
   FutureOr<void> updatePassword(String currentPassword, String newPassword) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<CreditCard>> getMyCreditCards() {
+    throw UnimplementedError();
+  }
+
+  @override
+  FutureOr<void> deleteCreditCard(CreditCard creditCard) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<CreditCard> addCreditCard(CreditCard creditCard) {
     throw UnimplementedError();
   }
 }

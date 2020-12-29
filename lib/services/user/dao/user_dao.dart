@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:raf_airlines_client/models/credit_card.dart';
 import 'package:raf_airlines_client/models/user.dart';
 
 abstract class UserDAO {
@@ -15,4 +16,8 @@ abstract class UserDAO {
   FutureOr<void> updatePassword(String currentPassword, String newPassword);
 
   Future<List<CreditCard>> getMyCreditCards();
+
+  FutureOr<void> deleteCreditCard(CreditCard creditCard);
+
+  Future<CreditCard> addCreditCard(CreditCard creditCard);
 }

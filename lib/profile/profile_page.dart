@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
+import 'package:raf_airlines_client/profile/credit_card/bloc/credit_cards_bloc.dart';
+import 'package:raf_airlines_client/profile/credit_card/credit_card_body.dart';
 import 'package:raf_airlines_client/profile/user_info/bloc/user_info_bloc.dart';
 import 'package:raf_airlines_client/profile/user_info/user_info_body.dart';
 import 'package:raf_airlines_client/services/service_provider.dart';
@@ -18,7 +20,10 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Widget> _children = [
     BlocProvider<UserInfoBloc>(
         create: (_) => UserInfoBloc(service: getService<UserService>())..add(UserInfoInit()), child: UserInfoBody()),
-    Container()
+    BlocProvider<CreditCardsBloc>(
+      create: (_) => CreditCardsBloc(service: getService<UserService>())..add(CreditCardsInit()),
+      child: CreditCardBody(),
+    )
   ];
 
   @override

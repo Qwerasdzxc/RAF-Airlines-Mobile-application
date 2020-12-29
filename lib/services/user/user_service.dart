@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:raf_airlines_client/models/credit_card.dart';
 import 'package:raf_airlines_client/models/user.dart';
 import 'package:raf_airlines_client/services/user/dao/user_dao.dart';
 
@@ -23,4 +24,8 @@ class UserService {
       dao.updatePassword(currentPassword, newPassword);
 
   Future<List<CreditCard>> getMyCreditCards() async => dao.getMyCreditCards();
+
+  FutureOr<void> deleteCreditCard(CreditCard creditCard) async => dao.deleteCreditCard(creditCard);
+
+  Future<CreditCard> addCreditCard(CreditCard creditCard) async => dao.addCreditCard(creditCard);
 }
