@@ -12,10 +12,7 @@ import 'package:raf_airlines_client/ui/loading_icon.dart';
 class CreditCardBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CreditCardsBloc, CreditCardsState>(
-        listener: (context, state) {
-          print(state.toString());
-        },
+    return BlocBuilder<CreditCardsBloc, CreditCardsState>(
         builder: (context, state) {
           if (state is CreditCardsLoaded)
             return Padding(
