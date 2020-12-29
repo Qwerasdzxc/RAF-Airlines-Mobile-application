@@ -7,7 +7,6 @@ import 'package:raf_airlines_client/network/network_exception.dart';
 import 'package:raf_airlines_client/services/user/dao/user_dao.dart';
 
 class UserMockDAO implements UserDAO {
-
   final List<CreditCard> _crediCards = [
     CreditCard(number: "1234 5678 9101 2345", ccv: 123),
     CreditCard(number: "9876 5432 1098 7654", ccv: 987),
@@ -43,7 +42,7 @@ class UserMockDAO implements UserDAO {
         surname: "Petrovic",
         email: "petrovic.luka99@gmail.com",
         passport: "123456789",
-        tier: Tier(id: 1, threshold: 2500, name: "Silver"));
+        tier: Tier(id: 1, threshold: 2500, name: "Silver", salePercentage: 20));
   }
 
   @override

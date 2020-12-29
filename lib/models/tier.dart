@@ -6,12 +6,14 @@ class Tier extends Equatable {
   final int id;
   final int threshold;
 
+  final double salePercentage;
+
   final String name;
 
-  Tier({@required this.id, @required this.threshold, @required this.name});
+  Tier({@required this.id, @required this.threshold, @required this.salePercentage, @required this.name});
 
   factory Tier.fromJson(Map json) =>
-      Tier(id: json["id"], threshold: json["threshold"], name: json["name"]);
+      Tier(id: json["id"], threshold: json["threshold"], salePercentage: json["salePercentage"], name: json["name"]);
 
   @override
   List<Object> get props => [id];

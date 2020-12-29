@@ -9,6 +9,7 @@ import 'package:raf_airlines_client/services/flight/flight_service.dart';
 import 'package:raf_airlines_client/services/ticket/ticket_service.dart';
 
 part 'home_event.dart';
+
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -31,6 +32,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       } catch (_) {
         yield HomeError();
       }
+    } else if (event is HomeTicketAdded) {
+      HomeLoaded currState = state;
+      yield HomeLoaded(flights: currState.flights, tickets: List.from(currState.tickets)
+        ..add(event.ticket));
     }
   }
 }

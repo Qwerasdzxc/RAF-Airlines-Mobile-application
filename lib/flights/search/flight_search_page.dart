@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:raf_airlines_client/flights/search/bloc/flight_search_bloc.dart';
 import 'package:raf_airlines_client/flights/search/results/flight_results_page.dart';
+import 'package:raf_airlines_client/home/bloc/home_bloc.dart';
 import 'package:raf_airlines_client/models/airplane.dart';
 import 'package:raf_airlines_client/ui/back_bar.dart';
 import 'package:raf_airlines_client/ui/error_button_widget.dart';
@@ -36,10 +37,12 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
           child: Column(
             children: [
               BackBar(),
-              BlocConsumer<FlightSearchBloc, FlightSearchState>(listener: (context, state) {
+              BlocConsumer<FlightSearchBloc, FlightSearchState>(listener: (_, state) {
                 if (state is FlightSearchSuccessful)
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (_) => FlightResultsPage(flights: state.flights)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => BlocProvider.value(
+                          value: BlocProvider.of<HomeBloc>(context),
+                          child: FlightResultsPage(flights: state.flights))));
               }, builder: (context, state) {
                 if (state is FlightSearchLoading)
                   return Expanded(child: LoadingIcon());

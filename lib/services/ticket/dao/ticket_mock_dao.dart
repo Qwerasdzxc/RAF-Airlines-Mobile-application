@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:raf_airlines_client/models/airplane.dart';
 import 'package:raf_airlines_client/models/flight.dart';
 import 'package:raf_airlines_client/models/ticket.dart';
@@ -36,5 +38,13 @@ class TicketMockDAO implements TicketDAO {
     await Future.delayed(Duration(milliseconds: 500));
 
     return List.from(tickets);
+  }
+
+  @override
+  Future<Ticket> buyTicket(Flight flight) async {
+    await Future.delayed(Duration(milliseconds: 500));
+    
+    tickets.add(Ticket(id: Random().nextInt(99999), flight: flight, canceled: false, dayBought: DateTime.now()));
+    return tickets.last;
   }
 }

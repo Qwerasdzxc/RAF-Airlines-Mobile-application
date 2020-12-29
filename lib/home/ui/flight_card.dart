@@ -1,9 +1,15 @@
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raf_airlines_client/home/bloc/home_bloc.dart';
 import 'package:raf_airlines_client/models/flight.dart';
+import 'package:raf_airlines_client/services/service_provider.dart';
+import 'package:raf_airlines_client/services/ticket/ticket_service.dart';
+import 'package:raf_airlines_client/services/user/user_service.dart';
+import 'package:raf_airlines_client/tickets/bloc/new_ticket_bloc.dart';
+import 'package:raf_airlines_client/tickets/new_ticket_dialog.dart';
 
 class FlightCard extends StatelessWidget {
-
   final Flight flight;
 
   const FlightCard({Key key, @required this.flight}) : super(key: key);
@@ -38,10 +44,27 @@ class FlightCard extends StatelessWidget {
                     elevation: 1,
                     color: Theme.of(context).primaryColor,
                     child: Text(
-                      "View",
+                      "Buy ticket",
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () => print("a"),
+                    onPressed: () => showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.grey[100],
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.only(topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                        ),
+                        builder: (_) => BlocProvider<NewTicketBloc>(
+                            lazy: false,
+                            create: (_) => NewTicketBloc(
+                                userService: getService<UserService>(),
+                                ticketService: getService<TicketService>(),
+                                homeBloc: BlocProvider.of<HomeBloc>(context))
+                              ..add(NewTicketInit()),
+                            child: NewTicketDialog(
+                              flight: flight,
+                            ))),
                   )
                 ],
               ),
