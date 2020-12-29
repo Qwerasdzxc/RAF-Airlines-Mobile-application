@@ -10,11 +10,12 @@ abstract class NewTicketState extends Equatable {
 class NewTicketInitial extends NewTicketState {
 
   final User profile;
+  final List<CreditCard> creditCards;
 
-  NewTicketInitial({@required this.profile});
+  NewTicketInitial({@required this.creditCards, @required this.profile});
 
   @override
-  List<Object> get props => [profile];
+  List<Object> get props => [creditCards, profile];
 }
 
 class NewTicketLoading extends NewTicketState {}

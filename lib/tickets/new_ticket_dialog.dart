@@ -1,15 +1,25 @@
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:raf_airlines_client/models/credit_card.dart';
 import 'package:raf_airlines_client/models/flight.dart';
 import 'package:raf_airlines_client/tickets/bloc/new_ticket_bloc.dart';
 import 'package:raf_airlines_client/ui/error_button_widget.dart';
 import 'package:raf_airlines_client/ui/loading_icon.dart';
 
-class NewTicketDialog extends StatelessWidget {
+class NewTicketDialog extends StatefulWidget {
   final Flight flight;
 
   const NewTicketDialog({Key key, @required this.flight}) : super(key: key);
+
+  @override
+  _NewTicketDialogState createState() => _NewTicketDialogState();
+}
+
+class _NewTicketDialogState extends State<NewTicketDialog> {
+  final _formKey = GlobalKey<FormState>();
+
+  CreditCard _selectedCreditCard;
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +96,7 @@ class NewTicketDialog extends StatelessWidget {
                                   duration: Duration(milliseconds: 150),
                                   child: BlocConsumer<NewTicketBloc, NewTicketState>(
                                     listener: (context, state) {
-                                      if (state is NewTicketDone)
-                                        Navigator.of(context).pop();
+                                      if (state is NewTicketDone) Navigator.of(context).pop();
                                     },
                                     builder: (context, state) {
                                       if (state is NewTicketLoading)
@@ -110,7 +119,7 @@ class NewTicketDialog extends StatelessWidget {
                                                     width: 16,
                                                   ),
                                                   Text(
-                                                    flight.startDestination,
+                                                    widget.flight.startDestination,
                                                     style: TextStyle(
                                                         color: Colors.blue, fontSize: 24, fontWeight: FontWeight.bold),
                                                   ),
@@ -129,7 +138,7 @@ class NewTicketDialog extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Text(
-                                                    flight.endDestination,
+                                                    widget.flight.endDestination,
                                                     style: TextStyle(
                                                         color: Colors.orange,
                                                         fontSize: 24,
@@ -146,7 +155,7 @@ class NewTicketDialog extends StatelessWidget {
                                                 ],
                                               ),
                                               Divider(
-                                                height: 32,
+                                                height: 24,
                                               ),
                                               Row(
                                                 children: [
@@ -167,13 +176,13 @@ class NewTicketDialog extends StatelessWidget {
                                                     width: 6,
                                                   ),
                                                   Text(
-                                                    "${flight.distance} KM",
+                                                    "${widget.flight.distance} KM",
                                                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                                   ),
                                                 ],
                                               ),
                                               SizedBox(
-                                                height: 12,
+                                                height: 6,
                                               ),
                                               Row(
                                                 children: [
@@ -194,7 +203,7 @@ class NewTicketDialog extends StatelessWidget {
                                                     width: 6,
                                                   ),
                                                   Text(
-                                                    "${flight.price} EUR",
+                                                    "${widget.flight.price} EUR",
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight: FontWeight.bold,
@@ -212,7 +221,7 @@ class NewTicketDialog extends StatelessWidget {
                                                     width: 6,
                                                   ),
                                                   Text(
-                                                    "${flight.price - (flight.price * state.profile.tier.salePercentage / 100)} EUR",
+                                                    "${widget.flight.price - (widget.flight.price * state.profile.tier.salePercentage / 100)} EUR",
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.bold,
@@ -221,7 +230,7 @@ class NewTicketDialog extends StatelessWidget {
                                                 ],
                                               ),
                                               SizedBox(
-                                                height: 12,
+                                                height: 6,
                                               ),
                                               Row(
                                                 children: [
@@ -248,7 +257,7 @@ class NewTicketDialog extends StatelessWidget {
                                                 ],
                                               ),
                                               Divider(
-                                                height: 24,
+                                                height: 16,
                                               ),
                                               Row(
                                                 children: [
@@ -275,7 +284,7 @@ class NewTicketDialog extends StatelessWidget {
                                                 ],
                                               ),
                                               SizedBox(
-                                                height: 12,
+                                                height: 6,
                                               ),
                                               Row(
                                                 children: [
@@ -301,19 +310,58 @@ class NewTicketDialog extends StatelessWidget {
                                                   ),
                                                 ],
                                               ),
+                                              Form(
+                                                key: _formKey,
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.credit_card,
+                                                      color: Colors.grey,
+                                                      size: 26,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 12,
+                                                    ),
+                                                    Text("Credit card: ",
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Colors.grey,
+                                                            fontWeight: FontWeight.bold)),
+                                                    SizedBox(
+                                                      width: 6,
+                                                    ),
+                                                    Expanded(
+                                                      child: DropdownButtonFormField<CreditCard>(
+                                                          isExpanded: true,
+                                                          value: _selectedCreditCard,
+                                                          onChanged: (selected) =>
+                                                              setState(() => _selectedCreditCard = selected),
+                                                          validator: (value) =>
+                                                              value != null ? null : "Credit card must be selected",
+                                                          items: state.creditCards
+                                                              .map((card) => DropdownMenuItem<CreditCard>(
+                                                                    value: card,
+                                                                    child: Text(card.number),
+                                                                  ))
+                                                              .toList()),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
                                               SizedBox(
                                                 height: 32,
                                               ),
                                               FloatingActionButton.extended(
-                                                onPressed: () => BlocProvider.of<NewTicketBloc>(context)
-                                                    .add(NewTicketSubmitted(flight: flight)),
+                                                onPressed: () {
+                                                  if (_formKey.currentState.validate())
+                                                    BlocProvider.of<NewTicketBloc>(context).add(NewTicketSubmitted(
+                                                        creditCard: _selectedCreditCard, flight: widget.flight));
+                                                },
                                                 backgroundColor: Theme.of(context).primaryColorDark,
                                                 label: Text(
                                                   "Buy ticket",
                                                   style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 22,
-                                                      fontWeight: FontWeight.bold),
+                                                      color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
                                                 ),
                                               )
                                             ],
@@ -328,13 +376,16 @@ class NewTicketDialog extends StatelessWidget {
                                               Icon(
                                                 Icons.flight,
                                                 color: Colors.grey,
-                                                size: 48,
+                                                size: 64,
                                               ),
-                                              SizedBox(height: 64,),
+                                              SizedBox(
+                                                height: 64,
+                                              ),
                                               Text(
                                                 "Ticket successfully bought!",
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(fontSize: 22),
+                                                style:
+                                                    TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Theme.of(context).primaryColorDark),
                                               )
                                             ],
                                           ),

@@ -34,13 +34,14 @@ class FlightMockDAO implements FlightDAO {
 
   @override
   Future<List<Flight>> searchFlights(
-      {String startDestination,
+      String startDestination,
       String endDestination,
       int minDistance,
       int maxDistance,
       int minPrice,
       int maxPrice,
-      Airplane airplane}) async {
+      Airplane airplane,
+      ) async {
     await Future.delayed(Duration(milliseconds: 500));
 
     return List.from(flights);

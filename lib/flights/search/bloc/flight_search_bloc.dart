@@ -38,14 +38,8 @@ class FlightSearchBloc extends Bloc<FlightSearchEvent, FlightSearchState> {
       yield FlightSearchLoading();
 
       try {
-        final flights = await flightService.searchFlights(
-            startDestination: event.startDestination,
-            endDestination: event.endDestination,
-            minDistance: event.minDistance,
-            maxDistance: event.maxDistance,
-            minPrice: event.minPrice,
-            maxPrice: event.maxPrice,
-            airplane: event.airplane);
+        final flights = await flightService.searchFlights(event.startDestination, event.endDestination,
+            event.minDistance, event.maxDistance, event.minPrice, event.maxPrice, event.airplane);
 
         yield FlightSearchSuccessful(airplanes: planes, flights: flights);
       } catch (_) {

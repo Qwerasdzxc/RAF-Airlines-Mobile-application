@@ -17,38 +17,67 @@ class UserRestDAO implements UserDAO {
   }
 
   @override
-  FutureOr<void> register(
-      String name, String surname, String email, String password, String passport) {
-    throw UnimplementedError();
+  FutureOr<void> register(String name, String surname, String email, String password, String passport) async {
+    try {
+      await RestClient().register(name, surname, email, password, passport);
+    } on NetworkException catch (e) {
+      throw e;
+    }
   }
 
   @override
-  FutureOr<void> updateProfile(String name, String surname, String email, String passport) {
-    throw UnimplementedError();
+  FutureOr<void> updateProfile(String name, String surname, String email, String passport) async {
+    try {
+      await RestClient().updateProfile(name, surname, email, passport);
+    } on NetworkException catch (e) {
+      throw e;
+    }
   }
 
   @override
-  Future<User> getMyProfile() {
-    throw UnimplementedError();
+  Future<User> getMyProfile() async {
+    try {
+      User user = await RestClient().getMyProfile();
+      return user;
+    } on NetworkException catch (e) {
+      throw e;
+    }
   }
 
   @override
-  FutureOr<void> updatePassword(String currentPassword, String newPassword) {
-    throw UnimplementedError();
+  FutureOr<void> updatePassword(String currentPassword, String newPassword) async {
+    try {
+      await RestClient().updatePassword(currentPassword, newPassword);
+    } on NetworkException catch (e) {
+      throw e;
+    }
   }
 
   @override
-  Future<List<CreditCard>> getMyCreditCards() {
-    throw UnimplementedError();
+  Future<List<CreditCard>> getMyCreditCards() async {
+    try {
+      List<CreditCard> creditCards = await RestClient().getMyCreditCards();
+      return creditCards;
+    } on NetworkException catch (e) {
+      throw e;
+    }
   }
 
   @override
-  FutureOr<void> deleteCreditCard(CreditCard creditCard) {
-    throw UnimplementedError();
+  FutureOr<void> deleteCreditCard(CreditCard creditCard) async {
+    try {
+      await RestClient().deleteCreditCard(creditCard);
+    } on NetworkException catch (e) {
+      throw e;
+    }
   }
 
   @override
-  Future<CreditCard> addCreditCard(CreditCard creditCard) {
-    throw UnimplementedError();
+  Future<CreditCard> addCreditCard(CreditCard creditCard) async {
+    try {
+      await RestClient().addCreditCard(creditCard);
+    } on NetworkException catch (e) {
+      throw e;
+    }
   }
 }

@@ -9,12 +9,13 @@ abstract class NewTicketEvent extends Equatable {
 
 class NewTicketSubmitted extends NewTicketEvent {
 
+  final CreditCard creditCard;
   final Flight flight;
 
-  NewTicketSubmitted({@required this.flight});
+  NewTicketSubmitted({@required this.creditCard, @required this.flight});
 
   @override
-  List<Object> get props => [flight];
+  List<Object> get props => [creditCard, flight];
 }
 
 class NewTicketInit extends NewTicketEvent {}
