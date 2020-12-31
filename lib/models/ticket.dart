@@ -17,7 +17,7 @@ class Ticket extends Equatable {
       id: json["ticketId"],
       flight: Flight.fromJson(json["flight"]),
       canceled: json["canceled"],
-      dayBought: DateTime.parse(json["dayBought"]));
+      dayBought: json["dayBought"] != null ? DateTime.parse(json["dayBought"]) : null);
 
   @override
   List<Object> get props => [id];

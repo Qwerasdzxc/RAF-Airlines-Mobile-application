@@ -6,6 +6,7 @@ import 'package:raf_airlines_client/home/bloc/home_bloc.dart';
 import 'package:raf_airlines_client/models/airplane.dart';
 import 'package:raf_airlines_client/ui/back_bar.dart';
 import 'package:raf_airlines_client/ui/error_button_widget.dart';
+import 'package:raf_airlines_client/ui/fullscreen_popup.dart';
 import 'package:raf_airlines_client/ui/loading_icon.dart';
 
 class FlightSearchPage extends StatefulWidget {
@@ -27,6 +28,14 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
   RangeValues _selectedDistanceValues = RangeValues(0, maxDistance);
   RangeValues _selectedPriceValues = RangeValues(0, maxPrice);
 
+  Future<void> _showPopup(BuildContext context, String text) async {
+    await Navigator.of(context).push(PageRouteBuilder(
+        opaque: false,
+        barrierDismissible: true,
+        pageBuilder: (BuildContext context, _, __) =>
+            FullscreenPopup(message: text)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,11 +47,15 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
             children: [
               BackBar(),
               BlocConsumer<FlightSearchBloc, FlightSearchState>(listener: (_, state) {
-                if (state is FlightSearchSuccessful)
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => BlocProvider.value(
-                          value: BlocProvider.of<HomeBloc>(context),
-                          child: FlightResultsPage(flights: state.flights))));
+                if (state is FlightSearchSuccessful) {
+                  if (state.flights.isNotEmpty)
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => BlocProvider.value(
+                            value: BlocProvider.of<HomeBloc>(context),
+                            child: FlightResultsPage(flights: state.flights))));
+                  else
+                    _showPopup(context, "No flights found!");
+                }
               }, builder: (context, state) {
                 if (state is FlightSearchLoading)
                   return Expanded(child: LoadingIcon());
@@ -230,6 +243,7 @@ class _FlightSearchPageState extends State<FlightSearchPage> {
                                           ),
                                           hintText: 'Select airplane',
                                         ),
+                                        value: _selectedAirplane,
                                         isExpanded: true,
                                         onChanged: (selected) => setState(() => _selectedAirplane = selected),
                                         items: airplanes

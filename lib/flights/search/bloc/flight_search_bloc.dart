@@ -42,7 +42,7 @@ class FlightSearchBloc extends Bloc<FlightSearchEvent, FlightSearchState> {
             event.minDistance, event.maxDistance, event.minPrice, event.maxPrice, event.airplane);
 
         yield FlightSearchSuccessful(airplanes: planes, flights: flights);
-      } catch (_) {
+      } catch (e) {
         yield FlightSearchError();
       }
     }

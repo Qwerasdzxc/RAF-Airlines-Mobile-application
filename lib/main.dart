@@ -8,7 +8,7 @@ import 'package:raf_airlines_client/services/user/user_service.dart';
 import 'login/bloc/login_bloc.dart';
 
 void main() {
-  _launchMock();
+  _launchProduction();
 }
 
 void _launchProduction() {

@@ -13,7 +13,6 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-
   final FlightService flightService;
   final TicketService ticketService;
 
@@ -34,8 +33,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
     } else if (event is HomeTicketAdded) {
       HomeLoaded currState = state;
-      yield HomeLoaded(flights: currState.flights, tickets: List.from(currState.tickets)
-        ..add(event.ticket));
+      yield HomeLoaded(
+          flights: List.from(currState.flights)..removeWhere((flight) => flight.id == event.ticket.flight.id),
+          tickets: List.from(currState.tickets)..add(event.ticket));
     }
   }
 }

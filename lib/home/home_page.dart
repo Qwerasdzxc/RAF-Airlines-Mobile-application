@@ -39,9 +39,7 @@ class HomePage extends StatelessWidget {
                             Icon(
                               Icons.flight,
                               size: 32,
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             SizedBox(
                               width: 6,
@@ -56,9 +54,7 @@ class HomePage extends StatelessWidget {
                           onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProfilePage())),
                           child: CircleAvatar(
                             backgroundColor: Colors.grey[300],
-                            child: Icon(Icons.person, color: Theme
-                                .of(context)
-                                .primaryColor),
+                            child: Icon(Icons.person, color: Theme.of(context).primaryColor),
                           ),
                         )
                       ],
@@ -67,176 +63,185 @@ class HomePage extends StatelessWidget {
                   if (state is HomeLoading)
                     Expanded(
                         child: LoadingIcon(
-                          text: "Loading flights...",
-                        ))
-                  else
-                    if (state is HomeLoaded)
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "Hello,",
-                              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            Text(
-                              "Let's discover a new adventure!",
-                              style: TextStyle(fontSize: 18, color: Colors.grey),
-                            ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            Expanded(
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                      text: "Loading flights...",
+                    ))
+                  else if (state is HomeLoaded)
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Hello,",
+                                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                              ),
+                              InkWell(
+                                onTap: () => BlocProvider.of<HomeBloc>(context).add(HomeInit()),
+                                child: Text(
+                                  "Refresh",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Theme.of(context).primaryColorDark, fontWeight: FontWeight.bold),
                                 ),
-                                elevation: 8,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.view_carousel,
-                                              color: Colors.grey,
-                                            ),
-                                            SizedBox(
-                                              width: 12,
-                                            ),
-                                            Text(
-                                              "Your tickets:",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Theme
-                                                      .of(context)
-                                                      .primaryColor,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Text(
+                            "Let's discover a new adventure!",
+                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Expanded(
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              elevation: 8,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.view_carousel,
+                                            color: Colors.grey,
+                                          ),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            "Your tickets:",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Theme.of(context).primaryColor,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
                                       ),
-                                      Divider(
-                                        height: 32,
-                                      ),
-                                      Expanded(
-                                        child: state.tickets.isNotEmpty
-                                            ? ListView.builder(
-                                            physics: ClampingScrollPhysics(),
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: state.tickets.length,
-                                            itemBuilder: (BuildContext context, int index) =>
-                                                TicketCard(
-                                                  ticket: state.tickets[index],
-                                                ))
-                                            : Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Icon(
-                                              Icons.no_sim,
-                                              color: Colors.grey,
-                                              size: 36,
+                                    ),
+                                    Divider(
+                                      height: 32,
+                                    ),
+                                    Expanded(
+                                      child: state.tickets.isNotEmpty
+                                          ? ListView.builder(
+                                              physics: ClampingScrollPhysics(),
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: state.tickets.length,
+                                              itemBuilder: (BuildContext context, int index) => TicketCard(
+                                                    ticket: state.tickets[index],
+                                                  ))
+                                          : Column(
+                                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Icon(
+                                                  Icons.no_sim,
+                                                  color: Colors.grey,
+                                                  size: 36,
+                                                ),
+                                                Text(
+                                                  "You don't have any active tickets",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(fontSize: 18),
+                                                )
+                                              ],
                                             ),
-                                            Text(
-                                              "You don't have any active tickets",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 18),
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
-                            Divider(
-                              height: 24,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Text(
-                                        "Today's recommendations:",
-                                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                      ),
-                                      if (state.flights.isNotEmpty)
-                                        InkWell(
-                                          onTap: () =>
-                                              Navigator.of(context).push(MaterialPageRoute(builder: (_) =>
-                                                  MultiBlocProvider(providers: [
+                          ),
+                          Divider(
+                            height: 24,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      "Today's recommendations:",
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    ),
+                                    if (state.flights.isNotEmpty)
+                                      InkWell(
+                                        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (_) => MultiBlocProvider(
+                                                  providers: [
                                                     BlocProvider<FlightSearchBloc>(
-                                                      create: (_) =>
-                                                      FlightSearchBloc(
+                                                      create: (_) => FlightSearchBloc(
                                                           airplaneService: getService<AirplaneService>(),
                                                           flightService: getService<FlightService>())
                                                         ..add(FlightSearchInit()),
                                                       child: FlightSearchPage(),
                                                     ),
                                                     BlocProvider.value(value: BlocProvider.of<HomeBloc>(context))
-                                                  ], child: FlightSearchPage(),))),
-                                          child: Text(
-                                            "View all",
-                                            style: TextStyle(
-                                                fontSize: 18, color: Colors.orange, fontWeight: FontWeight.bold),
+                                                  ],
+                                                  child: FlightSearchPage(),
+                                                ))),
+                                        child: Text(
+                                          "View all",
+                                          style: TextStyle(
+                                              fontSize: 18, color: Colors.orange, fontWeight: FontWeight.bold),
+                                        ),
+                                      )
+                                  ],
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
+                                    child: state.flights.isNotEmpty
+                                        ? ListView.builder(
+                                            physics: ClampingScrollPhysics(),
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: state.flights.length,
+                                            itemBuilder: (BuildContext context, int index) => FlightCard(
+                                                  flight: state.flights[index],
+                                                ))
+                                        : Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Icon(
+                                                Icons.airplanemode_inactive,
+                                                color: Colors.grey,
+                                                size: 64,
+                                              ),
+                                              Text(
+                                                "There are currently no available flights",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(fontSize: 18),
+                                              )
+                                            ],
                                           ),
-                                        )
-                                    ],
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 16),
-                                      child: state.flights.isNotEmpty
-                                          ? ListView.builder(
-                                          physics: ClampingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: state.flights.length,
-                                          itemBuilder: (BuildContext context, int index) =>
-                                              FlightCard(
-                                                flight: state.flights[index],
-                                              ))
-                                          : Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Icon(
-                                            Icons.airplanemode_inactive,
-                                            color: Colors.grey,
-                                            size: 64,
-                                          ),
-                                          Text(
-                                            "There are currently no available flights",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 18),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    else
-                      ErrorButtonWidget(callback: () => BlocProvider.of<HomeBloc>(context).add(HomeInit()))
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  else
+                    ErrorButtonWidget(callback: () => BlocProvider.of<HomeBloc>(context).add(HomeInit()))
                 ],
               );
             }),
