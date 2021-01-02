@@ -8,9 +8,9 @@ import 'package:raf_airlines_client/services/flight/dao/flight_dao.dart';
 
 class FlightRestDAO implements FlightDAO {
   @override
-  Future<List<Flight>> getAvailableFlights() async {
+  Future<List<Flight>> getAvailableFlights(int page) async {
     try {
-      List<Flight> flights = await RestClient().getAvailableFlights();
+      List<Flight> flights = await RestClient().getAvailableFlights(page);
       return flights;
     } on NetworkException catch (e) {
       throw e;

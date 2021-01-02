@@ -17,12 +17,17 @@ class UserInfoLoaded extends UserInfoState {
   final String email;
   final String passport;
 
+  final int miles;
+  final String tier;
+
   UserInfoLoaded(
       {@required this.isInEditMode,
       @required this.name,
       @required this.surname,
       @required this.email,
-      @required this.passport});
+      @required this.passport,
+      @required this.miles,
+      @required this.tier});
 
   UserInfoLoaded copyWith({bool isInEditMode, String name, String surname, String email, String passport}) =>
       UserInfoLoaded(
@@ -30,10 +35,12 @@ class UserInfoLoaded extends UserInfoState {
           name: name ?? this.name,
           surname: surname ?? this.surname,
           email: email ?? this.email,
-          passport: passport ?? this.passport);
+          passport: passport ?? this.passport,
+          miles: this.miles,
+          tier: this.tier);
 
   @override
-  List<Object> get props => [isInEditMode, name, surname, email, passport];
+  List<Object> get props => [isInEditMode, name, surname, email, passport, miles, tier];
 }
 
 class UserInfoError extends UserInfoState {}

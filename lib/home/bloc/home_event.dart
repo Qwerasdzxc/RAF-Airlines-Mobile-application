@@ -9,6 +9,8 @@ abstract class HomeEvent extends Equatable {
 
 class HomeInit extends HomeEvent {}
 
+class HomeLoadMoreFlights extends HomeEvent {}
+
 class HomeTicketAdded extends HomeEvent {
 
   final Ticket ticket;

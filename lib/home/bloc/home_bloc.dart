@@ -18,16 +18,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc({@required this.ticketService, @required this.flightService}) : super(HomeLoading());
 
+  int _currentPage = 1;
+
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     if (event is HomeInit) {
+      _currentPage = 1;
       yield HomeLoading();
 
       try {
         final tickets = await ticketService.getMyTickets();
-        final flights = await flightService.getAvailableFlights();
+        final flights = await flightService.getAvailableFlights(_currentPage);
 
         yield HomeLoaded(flights: flights, tickets: tickets);
+        _currentPage += 1;
       } catch (_) {
         yield HomeError();
       }
@@ -36,6 +40,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       yield HomeLoaded(
           flights: List.from(currState.flights)..removeWhere((flight) => flight.id == event.ticket.flight.id),
           tickets: List.from(currState.tickets)..add(event.ticket));
+    } else if (event is HomeLoadMoreFlights) {
+      HomeLoaded currState = state;
+      yield HomeLoading();
+
+      try {
+        final flights = await flightService.getAvailableFlights(_currentPage);
+
+        yield HomeLoaded(flights: List.from(currState.flights)..addAll(flights), tickets: currState.tickets);
+        _currentPage += 1;
+      } catch (_) {
+        yield HomeError();
+      }
     }
   }
 }

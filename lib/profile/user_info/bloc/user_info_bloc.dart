@@ -25,7 +25,9 @@ class UserInfoBloc extends Bloc<UserInfoEvent, UserInfoState> {
             name: profile.name,
             surname: profile.surname,
             email: profile.email,
-            passport: profile.passport);
+            passport: profile.passport,
+            miles: profile.miles,
+            tier: profile.tier.name);
       } catch (_) {
         yield UserInfoError();
       }

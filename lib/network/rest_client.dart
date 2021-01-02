@@ -127,9 +127,9 @@ class RestClient {
     }
   }
 
-  Future<List<Flight>> getAvailableFlights() async {
+  Future<List<Flight>> getAvailableFlights(int page) async {
     try {
-      Response response = await _dio.get("raf-airlines-flight-service/flight/available");
+      Response response = await _dio.get("raf-airlines-flight-service/flight/available", queryParameters: {"page": page});
       return response.data.map<Flight>((jsonItem) => Flight.fromJson(jsonItem)).toList();
     } on DioError catch (e) {
       throw NetworkException(cause: e.message);

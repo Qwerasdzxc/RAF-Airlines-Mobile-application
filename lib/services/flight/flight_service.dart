@@ -11,7 +11,7 @@ class FlightService {
 
   FlightService({@required this.dao});
 
-  Future<List<Flight>> getAvailableFlights() async => dao.getAvailableFlights();
+  Future<List<Flight>> getAvailableFlights(int page) async => dao.getAvailableFlights(page);
 
   Future<List<Flight>> searchFlights(
     String startDestination,

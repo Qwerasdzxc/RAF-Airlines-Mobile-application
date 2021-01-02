@@ -26,7 +26,7 @@ class FlightMockDAO implements FlightDAO {
   ];
 
   @override
-  Future<List<Flight>> getAvailableFlights() async {
+  Future<List<Flight>> getAvailableFlights(int page) async {
     await Future.delayed(Duration(milliseconds: 500));
 
     return List.from(flights);
