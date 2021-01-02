@@ -390,6 +390,8 @@ class _NewTicketDialogState extends State<NewTicketDialog> {
                                             ],
                                           ),
                                         );
+                                      else if (state is NewTicketDone)
+                                        return Container();
                                       else
                                         return ErrorButtonWidget(
                                             callback: () =>

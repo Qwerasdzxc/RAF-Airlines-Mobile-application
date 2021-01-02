@@ -75,7 +75,8 @@ class UserRestDAO implements UserDAO {
   @override
   Future<CreditCard> addCreditCard(CreditCard creditCard) async {
     try {
-      await RestClient().addCreditCard(creditCard);
+      CreditCard result = await RestClient().addCreditCard(creditCard);
+      return result;
     } on NetworkException catch (e) {
       throw e;
     }

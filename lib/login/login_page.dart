@@ -12,6 +12,7 @@ import 'package:raf_airlines_client/services/service_provider.dart';
 import 'package:raf_airlines_client/services/ticket/ticket_service.dart';
 import 'package:raf_airlines_client/services/user/user_service.dart';
 import 'package:raf_airlines_client/ui/card_widget.dart';
+import 'package:raf_airlines_client/ui/fullscreen_popup.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -55,19 +56,26 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void login(BuildContext context) async {
+  void _login(BuildContext context) async {
     if (_emailController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) return;
 
     BlocProvider.of<LoginBloc>(context)
         .add(LoginCredentialsProvided(email: _emailController.text.trim(), password: _passwordController.text.trim()));
   }
 
-  void navigateToHomeScreen() => Navigator.of(context).pushReplacement(MaterialPageRoute(
+  void _navigateToHomeScreen() => Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (_) => BlocProvider<HomeBloc>(
           create: (_) =>
               HomeBloc(ticketService: getService<TicketService>(), flightService: getService<FlightService>())
                 ..add(HomeInit()),
           child: HomePage())));
+
+  Future<void> _showPopup(BuildContext context, String text) async {
+    await Navigator.of(context).push(PageRouteBuilder(
+        opaque: false,
+        barrierDismissible: true,
+        pageBuilder: (BuildContext context, _, __) => FullscreenPopup(message: text)));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -188,11 +196,13 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                     ),
                   ),
                   BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
-                    if (state is LoginSuccessful) navigateToHomeScreen();
+                    if (state is LoginSuccessful)
+                      _navigateToHomeScreen();
+                    else if (state is LoginError) _showPopup(context, "Invalid login credentials!");
                   }, builder: (context, state) {
                     if (state is LoginInitial || state is LoginError)
                       return InkWell(
-                        onTap: () => login(context),
+                        onTap: () => _login(context),
                         child: Container(
                           height: 45,
                           width: MediaQuery.of(context).size.width / 1.2,

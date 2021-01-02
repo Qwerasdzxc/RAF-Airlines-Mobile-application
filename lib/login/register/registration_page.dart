@@ -66,6 +66,7 @@ class RegistrationPage extends StatelessWidget {
                                 ),
                               ]),
                         ),
+                        SizedBox(height: 8,),
                         WhiteListItem(
                             icon: Icons.person,
                             title: "Name:",

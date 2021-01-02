@@ -71,6 +71,9 @@ class HomePage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          SizedBox(
+                            height: 8,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -241,7 +244,7 @@ class HomePage extends StatelessWidget {
                       ),
                     )
                   else
-                    ErrorButtonWidget(callback: () => BlocProvider.of<HomeBloc>(context).add(HomeInit()))
+                    Expanded(child: ErrorButtonWidget(callback: () => BlocProvider.of<HomeBloc>(context).add(HomeInit())))
                 ],
               );
             }),
