@@ -32,16 +32,16 @@ And Ticket service for buying and managing tickets.
 ---
 
 ## Setup
-Clone this repo to your desktop and launch mock for testing or pull RAF Airlines Spring application for the full project implementation
+Clone this repo to your desktop and launch mock for testing or pull RAF Airlines Spring application for the full project implementation.
 
 ---
 
 ## Usage
-Run the application and enjoy
+Run the application and enjoy!
 
 ---
 
 ## Notes
-This application was built in parallel with https://github.com/Qwerasdzxc/RAF-Airlines
+This application was built in parallel with https://github.com/Qwerasdzxc/RAF-Airlines and https://github.com/Qwerasdzxc/RAF-Airlines-Administrator-Portal
 
 Enjoy!
