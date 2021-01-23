@@ -1,7 +1,7 @@
-RAF-Airlines-Mobile-application
+RAF Airlines Mobile application
 ============
 
-Flutter application built in parallel with RAF Airlines Spring microservice application.
+**Flutter** application built in parallel with RAF Airlines Spring microservice application.
 
 The system consists of 3 main services. These services include the User service for authentication and authorization. 
 Flight service that is responsible for searching flights and airplanes. 
@@ -22,10 +22,10 @@ And Ticket service for buying and managing tickets.
 ---
 
 ## Features
-- BLoC architecture built for scalability (https://pub.dev/packages/flutter_bloc)
-- Service injection using GetIt for REST and mock services (https://pub.dev/packages/get_it)
+- **BLoC** architecture built for scalability (https://pub.dev/packages/flutter_bloc)
+- Service injection using **GetIt** for REST and mock services (https://pub.dev/packages/get_it)
 - JWT authentication
-- Dio HTTP client (https://pub.dev/packages/dio)
+- **Dio** HTTP client (https://pub.dev/packages/dio)
 - Clean and modern design
 - Animations
 
